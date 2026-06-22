@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediaWatch Latam — Servicios Periodísticos y Monitoreo de Medios</title>
+  <meta name="description" content="Servicios profesionales de periodismo, monitoreo de medios y comunicación estratégica para empresas, ONGs e instituciones en Costa Rica y Latinoamérica."/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:   #0D1F3C;
+      --gold:   #C9A84C;
+      --cream:  #F7F4EE;
+      --white:  #FFFFFF;
+      --text:   #1A1A2E;
+      --muted:  #6B7280;
+      --border: #E5E0D5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: #b8963e !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; align-items: center;
+      padding: 100px 2rem 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.12) 0%, transparent 60%);
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center; position: relative; z-index: 1;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 900; line-height: 1.15;
+      color: var(--white); margin-bottom: 1.4rem;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero-sub {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.05rem; margin-bottom: 2.4rem;
+      max-width: 460px;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 0.8rem 1.8rem; border-radius: 4px;
+      font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #b8963e; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1.5px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      padding: 0.8rem 1.8rem; border-radius: 4px;
+      font-weight: 500; font-size: 0.9rem;
+      text-decoration: none; transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+    /* hero dashboard card */
+    .hero-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 1.8rem;
+      backdrop-filter: blur(8px);
+    }
+    .card-title {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.4rem; }
+    .metric { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; }
+    .metric-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; }
+    .metric-val { font-size: 1.9rem; font-weight: 700; }
+    .metric-val.pos { color: #4ADE80; }
+    .metric-val.neg { color: #F87171; }
+    .checklist { list-style: none; }
+    .checklist li {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.85rem; color: rgba(255,255,255,0.75);
+      padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .checklist li:last-child { border: none; }
+    .checklist li::before { content: '✓'; color: var(--gold); font-weight: 700; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 80px 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+    .section-sub {
+      color: var(--muted); max-width: 560px; font-size: 1rem; margin-bottom: 3rem;
+    }
+    .divider {
+      width: 48px; height: 3px;
+      background: var(--gold); margin: 0.8rem 0 2.8rem;
+      border-radius: 2px;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 2rem;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+      cursor: default;
+    }
+    .service-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 6px 24px rgba(201,168,76,0.12);
+      transform: translateY(-3px);
+    }
+    .service-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--navy); display: flex; align-items: center;
+      justify-content: center; font-size: 1.4rem; margin-bottom: 1.2rem;
+    }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+    .service-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── MONITOREO DESTAQUE ── */
+    #monitoreo { background: var(--navy); }
+    #monitoreo .section-title { color: var(--white); }
+    #monitoreo .section-sub { color: rgba(255,255,255,0.6); }
+    .monitor-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+    }
+    .monitor-steps { list-style: none; }
+    .monitor-steps li {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .monitor-steps li:last-child { border: none; }
+    .step-num {
+      min-width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(201,168,76,0.15);
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--gold);
+    }
+    .step-text h4 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .step-text p { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+    .monitor-visual {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 1.8rem;
+    }
+    .monitor-visual .card-title { color: var(--gold); margin-bottom: 1.2rem; }
+    .monitor-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    .m-metric { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 1rem; }
+    .m-label { font-size: 0.68rem; color: rgba(255,255,255,0.45); margin-bottom: 0.3rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .m-val { font-size: 2rem; font-weight: 800; }
+    .m-val.g { color: #4ADE80; }
+    .m-val.r { color: #F87171; }
+    .media-types { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .media-badge {
+      background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold); font-size: 0.72rem; font-weight: 600;
+      padding: 0.3rem 0.8rem; border-radius: 20px;
+    }
+
+    /* ── COBERTURA ── */
+    #cobertura { background: var(--cream); }
+    .coverage-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+    .cov-card {
+      background: var(--white); border-radius: 10px; padding: 1.6rem;
+      border-left: 4px solid var(--gold);
+      transition: box-shadow 0.2s;
+    }
+    .cov-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+    .cov-card h4 { color: var(--navy); font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .cov-card p { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── GEOGRAFÍA ── */
+    #geografia { background: var(--white); }
+    .geo-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem;
+    }
+    .geo-card {
+      background: var(--cream); border-radius: 10px; padding: 1.4rem;
+      text-align: center; transition: transform 0.2s;
+    }
+    .geo-card:hover { transform: translateY(-2px); }
+    .geo-flag { font-size: 2rem; margin-bottom: 0.5rem; }
+    .geo-card h4 { color: var(--navy); font-size: 0.9rem; font-weight: 600; }
+    .geo-card p { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── SECTORES ── */
+    #sectores { background: var(--cream); }
+    .sectors-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;
+    }
+    .sector-item {
+      background: var(--white); border-radius: 8px; padding: 1.2rem;
+      text-align: center; border: 1.5px solid var(--border);
+      transition: border-color 0.2s;
+      font-size: 0.85rem; font-weight: 500; color: var(--navy);
+    }
+    .sector-item:hover { border-color: var(--gold); }
+    .sector-item span { display: block; font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+    /* ── REPORTES ── */
+    #reportes { background: var(--navy); }
+    #reportes .section-title { color: var(--white); }
+    #reportes .section-sub { color: rgba(255,255,255,0.6); }
+    .reports-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem;
+    }
+    .report-card {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 1.6rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .report-card:hover { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.3); }
+    .report-card h4 { color: var(--gold); font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .report-card p { font-size: 0.83rem; color: rgba(255,255,255,0.55); }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--white); }
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;
+    }
+    .contact-info p { color: var(--muted); margin-bottom: 1.6rem; font-size: 0.95rem; }
+    .contact-item {
+      display: flex; gap: 0.8rem; align-items: center;
+      padding: 0.8rem 0; border-bottom: 1px solid var(--border);
+    }
+    .contact-item:last-child { border: none; }
+    .contact-icon {
+      width: 40px; height: 40px; background: var(--navy);
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-item-text { font-size: 0.88rem; }
+    .contact-item-text strong { display: block; color: var(--navy); }
+    .contact-item-text a { color: var(--muted); text-decoration: none; }
+    .contact-item-text a:hover { color: var(--gold); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%; padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 6px;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      background: var(--cream); color: var(--text);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus { border-color: var(--gold); }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .btn-send {
+      background: var(--navy); color: var(--white);
+      padding: 0.85rem 2rem; border: none; border-radius: 6px;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn-send:hover { background: var(--gold); color: var(--navy); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.5);
+      text-align: center; padding: 2.5rem 2rem;
+      font-size: 0.82rem;
+    }
+    footer strong { color: var(--gold); }
+    footer .footer-links { display: flex; justify-content: center; gap: 2rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    footer .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; }
+    footer .footer-links a:hover { color: var(--gold); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .monitor-grid { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Media<span>Watch</span> Latam</div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#monitoreo">Monitoreo</a></li>
+    <li><a href="#cobertura">Cobertura</a></li>
+    <li><a href="#geografia">Cobertura Regional</a></li>
+    <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Periodismo · Comunicación · Monitoreo</p>
+      <h1>Comunicación que <em>Informa, Conecta</em> y Genera Confianza</h1>
+      <p class="hero-sub">Servicios profesionales de periodismo y comunicación estratégica para organizaciones que quieren ser escuchadas y bien representadas en los medios.</p>
+      <div class="hero-btns">
+        <a href="#contacto" class="btn-primary">Solicitar Servicios</a>
+        <a href="#servicios" class="btn-outline">Ver Servicios</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <p class="card-title">📊 Panel de Monitoreo — Ejemplo</p>
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">Menciones positivas</div>
+          <div class="metric-val pos">256</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Menciones negativas</div>
+          <div class="metric-val neg">18</div>
+        </div>
+      </div>
+      <ul class="checklist">
+        <li>Prensa escrita nacional e internacional</li>
+        <li>Radio y televisión monitoreadas</li>
+        <li>Alertas en tiempo real</li>
+        <li>Reportes ejecutivos con recomendaciones</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Lo que ofrezco</p>
+    <h2 class="section-title reveal">Servicios Profesionales</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Una solución completa para organizaciones que necesitan presencia y reputación sólida en los medios de comunicación.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">🔍</div>
+        <h3>Monitoreo de Medios</h3>
+        <p>Seguimiento sistemático en prensa escrita, radio, televisión y medios digitales nacionales e internacionales. Identificación de menciones positivas, negativas y temas sensibles.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📸</div>
+        <h3>Cobertura Fotográfica</h3>
+        <p>Cobertura profesional de actividades, eventos corporativos, conferencias y lanzamientos. Imágenes de alta calidad listas para difundir en todos los canales.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📰</div>
+        <h3>Notas de Prensa</h3>
+        <p>Redacción de comunicados de prensa con enfoque periodístico, estructurados para máxima difusión en medios impresos, digitales y broadcasting.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📝</div>
+        <h3>Reportajes y Publirreportajes</h3>
+        <p>Producción de contenido periodístico profundo: reportajes investigativos, perfiles institucionales y publirreportajes para posicionamiento de marca.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🎯</div>
+        <h3>Copy y Estrategia Digital</h3>
+        <p>Redacción de contenidos para redes sociales, sitio web y materiales institucionales, con apoyo en estrategia de comunicación y mercadeo.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">⚠️</div>
+        <h3>Gestión de Crisis</h3>
+        <p>Alertas tempranas ante menciones negativas y asesoría estratégica para proteger la reputación de su organización en momentos críticos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONITOREO -->
+<section id="monitoreo">
+  <div class="section-inner">
+    <div class="monitor-grid">
+      <div>
+        <p class="section-eyebrow reveal">Vigilancia continua</p>
+        <h2 class="section-title reveal">Monitoreo de Medios</h2>
+        <div class="divider reveal"></div>
+        <p class="section-sub reveal" style="color:rgba(255,255,255,0.6)">Sepa exactamente qué se dice de su organización antes de que una noticia se convierta en un problema.</p>
+        <ol class="monitor-steps">
+          <li class="reveal">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Rastreo diario de medios</h4>
+              <p>Seguimiento en tiempo real de prensa escrita, radio, TV y portales digitales nacionales e internacionales.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Clasificación de menciones</h4>
+              <p>Cada mención se clasifica como positiva, negativa o neutra, con análisis del tono y contexto editorial.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>Alerta inmediata</h4>
+              <p>Notificación directa al detectar menciones críticas o temas sensibles sobre su marca o vocero.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>Reporte ejecutivo</h4>
+              <p>Entrega de informes diarios, semanales o mensuales con hallazgos, tendencias y recomendaciones estratégicas.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="monitor-visual reveal">
+        <p class="card-title" style="font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem">Reporte Ejecutivo — Ejemplo</p>
+        <div class="monitor-metrics">
+          <div class="m-metric">
+            <div class="m-label">Menciones positivas</div>
+            <div class="m-val g">125</div>
+          </div>
+          <div class="m-metric">
+            <div class="m-label">Menciones negativas</div>
+            <div class="m-val r">12</div>
+          </div>
+        </div>
+        <p style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:0.8rem;letter-spacing:0.08em;text-transform:uppercase">Medios monitoreados</p>
+        <div class="media-types">
+          <span class="media-badge">Prensa escrita</span>
+          <span class="media-badge">Radio</span>
+          <span class="media-badge">Televisión</span>
+          <span class="media-badge">Portales digitales</span>
+          <span class="media-badge">Internacional</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COBERTURA DE EVENTOS -->
+<section id="cobertura">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Eventos y contenido</p>
+    <h2 class="section-title reveal">Cobertura y Producción de Contenido</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Desde el evento hasta la publicación, me encargo de toda la cadena de cobertura periodística.</p>
+    <div class="coverage-grid">
+      <div class="cov-card reveal">
+        <h4>📋 Planificación</h4>
+        <p>Coordinación previa del evento: guión de cobertura, identificación de voceros y ángulos noticiosos.</p>
+      </div>
+      <div class="cov-card reveal">
+        <h4>📸 Cobertura en sitio</h4>
+        <p>Fotografía profesional y documentación periodística del evento en tiempo real.</p>
+      </div>
+      <div class="cov-card reveal">
+        <h4>📰 Producción de contenido</h4>
+        <p>Redacción de nota de prensa, reportaje o publirreportaje listo para difundir el mismo día.</p>
+      </div>
+      <div class="cov-card reveal">
+        <h4>📢 Difusión</h4>
+        <p>Entrega del material en formatos listos para medios impresos, digitales y redes sociales.</p>
+      </div>
+      <div class="cov-card reveal">
+        <h4>📊 Seguimiento</h4>
+        <p>Monitoreo de la cobertura obtenida en medios después del evento, con reporte de impacto.</p>
+      </div>
+      <div class="cov-card reveal">
+        <h4>🎯 Estrategia</h4>
+        <p>Asesoría en posicionamiento y comunicación para maximizar el alcance de su actividad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GEOGRAFÍA -->
+<section id="geografia">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Alcance</p>
+    <h2 class="section-title reveal">Cobertura Regional y Disponibilidad</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Con base en Costa Rica y disponibilidad para trasladarme a cualquier zona del país o al extranjero según los requerimientos del proyecto.</p>
+    <div class="geo-grid">
+      <div class="geo-card reveal">
+        <div class="geo-flag">🇨🇷</div>
+        <h4>Costa Rica</h4>
+        <p>Cobertura completa en todo el territorio nacional</p>
+      </div>
+      <div class="geo-card reveal">
+        <div class="geo-flag">🌎</div>
+        <h4>Centroamérica</h4>
+        <p>Guatemala, Honduras, El Salvador, Nicaragua, Panamá</p>
+      </div>
+      <div class="geo-card reveal">
+        <div class="geo-flag">🌍</div>
+        <h4>Latinoamérica</h4>
+        <p>México, Colombia, Chile, Argentina y toda la región</p>
+      </div>
+      <div class="geo-card reveal">
+        <div class="geo-flag">🇺🇸</div>
+        <h4>Estados Unidos</h4>
+        <p>Cobertura para la comunidad hispana y mercado latino</p>
+      </div>
+      <div class="geo-card reveal">
+        <div class="geo-flag">🌐</div>
+        <h4>Internacional</h4>
+        <p>Monitoreo de medios europeos y globales según proyecto</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORES -->
+<section id="sectores">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">¿Para quién?</p>
+    <h2 class="section-title reveal">Sectores que Atendemos</h2>
+    <div class="divider reveal"></div>
+    <div class="sectors-grid">
+      <div class="sector-item reveal"><span>🏢</span>Empresas privadas</div>
+      <div class="sector-item reveal"><span>🌐</span>Multinacionales</div>
+      <div class="sector-item reveal"><span>🏦</span>Instituciones financieras</div>
+      <div class="sector-item reveal"><span>🤝</span>ONG y organizaciones sin fines de lucro</div>
+      <div class="sector-item reveal"><span>🏛️</span>Instituciones públicas</div>
+      <div class="sector-item reveal"><span>📣</span>Agencias de relaciones públicas</div>
+      <div class="sector-item reveal"><span>🏭</span>Cámaras empresariales</div>
+      <div class="sector-item reveal"><span>🎓</span>Universidades e instituciones educativas</div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTES -->
+<section id="reportes">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Entregables</p>
+    <h2 class="section-title reveal">Tipos de Reporte</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Cada informe está diseñado para ser leído en minutos y servir para la toma de decisiones.</p>
+    <div class="reports-grid">
+      <div class="report-card reveal">
+        <h4>⚡ Alerta Temprana</h4>
+        <p>Notificación inmediata al detectar una mención crítica. Entrega en tiempo real vía correo o WhatsApp.</p>
+      </div>
+      <div class="report-card reveal">
+        <h4>📅 Reporte Diario</h4>
+        <p>Resumen de todas las menciones del día, clasificadas por medio, tono y relevancia para su organización.</p>
+      </div>
+      <div class="report-card reveal">
+        <h4>📆 Reporte Semanal</h4>
+        <p>Análisis consolidado de la semana con tendencias, comparativo y recomendaciones de comunicación.</p>
+      </div>
+      <div class="report-card reveal">
+        <h4>📊 Reporte Mensual</h4>
+        <p>Informe ejecutivo completo con métricas, análisis de reputación y estrategia para el siguiente período.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Hablemos</p>
+    <h2 class="section-title reveal">Contacto</h2>
+    <div class="divider reveal"></div>
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <h3>¿Listo para fortalecer la presencia de su organización en los medios?</h3>
+        <p>Escribame y conversemos sobre cómo puedo apoyarle. Respondo a la brevedad por correo o WhatsApp.</p>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-item-text">
+            <strong>Correo electrónico</strong>
+            <a href="mailto:endirectofv@gmail.com">endirectofv@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div class="contact-item-text">
+            <strong>WhatsApp / Teléfono</strong>
+            <a href="https://wa.me/50687192443">+506 8719-2443</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text">
+            <strong>Ubicación base</strong>
+            <a>Costa Rica — Con disponibilidad para viajar</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <form class="contact-form" onsubmit="handleForm(event)">
+          <div class="form-row">
+            <input type="text" placeholder="Nombre" required />
+            <input type="text" placeholder="Organización" />
+          </div>
+          <input type="email" placeholder="Correo electrónico" required />
+          <select>
+            <option value="">¿Qué servicio le interesa?</option>
+            <option>Monitoreo de medios</option>
+            <option>Cobertura fotográfica de evento</option>
+            <option>Nota de prensa</option>
+            <option>Reportaje o publirreportaje</option>
+            <option>Estrategia de comunicación</option>
+            <option>Gestión de crisis</option>
+            <option>Varios servicios</option>
+          </select>
+          <textarea placeholder="Cuénteme brevemente sobre su proyecto o necesidad..."></textarea>
+          <button type="submit" class="btn-send">Enviar mensaje</button>
+          <p id="form-msg" style="display:none;color:#4ADE80;font-size:0.85rem;margin-top:0.5rem">✓ Mensaje enviado. Le respondo a la brevedad.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div><strong>Francisco Veracoechea</strong> — MediaWatch Latam</div>
+  <div style="margin-top:0.4rem">Periodista · Comunicador Social · Monitoreo de Medios</div>
+  <div class="footer-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#monitoreo">Monitoreo</a>
+    <a href="#cobertura">Cobertura</a>
+    <a href="#contacto">Contacto</a>
+    <a href="mailto:endirectofv@gmail.com">endirectofv@gmail.com</a>
+    <a href="https://wa.me/50687192443">+506 8719-2443</a>
+  </div>
+  <div style="margin-top:1.2rem;font-size:0.75rem">© 2025 MediaWatch Latam. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form handler
+  function handleForm(e) {
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    msg.style.display = 'block';
+    e.target.reset();
+    setTimeout(() => { msg.style.display = 'none'; }, 5000);
+  }
+</script>
+
+</body>
+</html>
