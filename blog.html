@@ -160,8 +160,8 @@
   <a href="index.html">Servicios</a>
   <a onclick="mostrarListado()" class="active" id="nav-inicio">Inicio</a>
   <a onclick="filtrarPor('conflicto')" id="nav-conflicto">Conflicto</a>
-  <a onclick="filtrarPor('iran')" id="nav-iran">Irán</a>
-  <a onclick="filtrarPor('medio oriente')" id="nav-oriente">Medio Oriente</a>
+  <a onclick="filtrarPor('americalatina')" id="nav-latam">América Latina</a>
+  <a onclick="filtrarPor('actualidad')" id="nav-actualidad">Actualidad</a>
   <a onclick="mostrarSobreMi()" id="nav-sobre">Acerca de mí</a>
 </nav>
 
@@ -608,11 +608,11 @@ document.addEventListener('DOMContentLoaded', renderAll);
 /* ── FILTROS POR CATEGORÍA ── */
 function filtrarPor(cat) {
   // Actualizar nav activo
-  ['nav-inicio','nav-conflicto','nav-iran','nav-oriente','nav-sobre'].forEach(id => {
+  ['nav-inicio','nav-conflicto','nav-latam','nav-actualidad','nav-sobre'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
-  const navMap = {'conflicto':'nav-conflicto','iran':'nav-iran','medio oriente':'nav-oriente'};
+  const navMap = {'conflicto':'nav-conflicto','americalatina':'nav-latam','actualidad':'nav-actualidad'};
   if (navMap[cat]) document.getElementById(navMap[cat]).classList.add('active');
 
   // Ocultar sobre mí
@@ -620,9 +620,22 @@ function filtrarPor(cat) {
   document.getElementById('listing-view').style.display = 'block';
   document.getElementById('article-view').style.display = 'none';
 
-  const filtrados = ARTICULOS.filter(a => a.categoria.toLowerCase().includes(cat));
+  // Normalizar acentos para comparar sin problemas
+  function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+  let filtrados;
+  if (cat === 'actualidad') {
+    // Actualidad muestra todos los artículos como feed de noticias recientes
+    filtrados = [...ARTICULOS];
+  } else if (cat === 'americalatina') {
+    // América Latina: coincide con latinoamérica, cuba, venezuela, costa rica, latinoamerica
+    const keywords = ['latinoam','cuba','venezuela','costa rica','latin'];
+    filtrados = ARTICULOS.filter(a => keywords.some(k => norm(a.categoria).includes(k)));
+  } else {
+    filtrados = ARTICULOS.filter(a => norm(a.categoria).includes(norm(cat)));
+  }
 
-  const secTitle = cat.charAt(0).toUpperCase() + cat.slice(1);
+  const titles = {'conflicto':'Conflicto','americalatina':'América Latina','actualidad':'Actualidad'};
+  const secTitle = titles[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1));
   document.getElementById('featured-slot').innerHTML = `<div class="section-rule"><span class="section-rule-label">Categoría: ${secTitle}</span><div class="section-rule-line"></div></div>`;
 
   if (filtrados.length === 0) {
@@ -648,7 +661,7 @@ function mostrarSobreMi() {
   document.getElementById('listing-view').style.display  = 'none';
   document.getElementById('article-view').style.display  = 'none';
   document.getElementById('sobremi-view').style.display  = 'block';
-  ['nav-inicio','nav-conflicto','nav-iran','nav-oriente'].forEach(id => {
+  ['nav-inicio','nav-conflicto','nav-iran','nav-africa'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
@@ -670,7 +683,7 @@ function contarVisita() {
 /* ── AJUSTE AL VOLVER AL INICIO ── */
 const _origMostrar = mostrarListado;
 window.mostrarListado = function() {
-  ['nav-conflicto','nav-iran','nav-oriente','nav-sobre'].forEach(id => {
+  ['nav-conflicto','nav-iran','nav-africa','nav-sobre'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
