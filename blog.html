@@ -151,7 +151,7 @@
     </div>
   </div>
   <div class="header-brand">
-    <div class="brand-name"><span class="brand-news">News</span> <span class="brand-latam">LATAM</span></div>
+    <div class="brand-name" onclick="mostrarListado()" style="cursor:pointer" title="Ir al inicio"><span class="brand-news">News</span> <span class="brand-latam">LATAM</span></div>
     <div class="brand-tagline">Periodismo Independiente · Análisis Geopolítico · Contexto que la noticia merece</div>
   </div>
 </header>
@@ -159,10 +159,10 @@
 <nav>
   <a href="index.html">Servicios</a>
   <a onclick="mostrarListado()" class="active" id="nav-inicio">Inicio</a>
-  <a href="https://newslatinoamericano.blogspot.com/search/label/conflicto" target="_blank">Conflicto</a>
-  <a href="https://newslatinoamericano.blogspot.com/search/label/Iran" target="_blank">Irán</a>
-  <a href="https://newslatinoamericano.blogspot.com/search/label/Medio%20Oriente" target="_blank">Medio Oriente</a>
-  <a href="https://newslatinoamericano.blogspot.com/p/acerca-de-mi.html" target="_blank">Acerca de mí</a>
+  <a onclick="filtrarPor('conflicto')" id="nav-conflicto">Conflicto</a>
+  <a onclick="filtrarPor('iran')" id="nav-iran">Irán</a>
+  <a onclick="filtrarPor('medio oriente')" id="nav-oriente">Medio Oriente</a>
+  <a onclick="mostrarSobreMi()" id="nav-sobre">Acerca de mí</a>
 </nav>
 
 <div class="breaking-bar">
@@ -404,6 +404,13 @@ const ARTICULOS = [
    ============================================================ */
 
 const SIDEBAR_HTML = `
+  <div class='widget'>
+    <span class='widget-title'>Estadísticas del blog</span>
+    <div class='about-widget' style='text-align:center'>
+      <div style='font-size:2rem;font-weight:900;color:var(--red)' id='contador-visitas'>—</div>
+      <div style='font-size:.75rem;color:var(--gray);margin-top:.3rem'>visitas desde este dispositivo</div>
+    </div>
+  </div>
   <div class="widget">
     <span class="widget-title">Sobre el autor</span>
     <div class="about-widget">
@@ -556,5 +563,123 @@ function renderAll() {
 document.addEventListener('DOMContentLoaded', renderAll);
 </script>
 
+
+<!-- SOBRE MÍ -->
+<div id="sobremi-view" style="display:none">
+  <div class="page-wrap" style="max-width:800px">
+    <button class="art-back" onclick="mostrarListado()">← Volver al inicio</button>
+    <div style="border-bottom:3px solid var(--ink);padding-bottom:1.5rem;margin-bottom:2rem">
+      <p class="art-kicker">El periodista detrás de News LATAM</p>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.15;color:var(--ink);margin-bottom:.8rem">Acerca de mí</h1>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:2rem;align-items:start">
+      <div style="text-align:center">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhG6ar_68u7oRxVYarCCCiPUvOIN9wOLgy69hwBT8t_3QH0x6At-v02xQhGzaoMs-x_Y0ZD0GlgSScfrAOqn5F2Y3wV9nUmbXc-U8kKhxiaIL7sNWpNAqKyqc4PXe1-hzfH_ZBFwhwdjSp0Z14qbPsAb-IzKnEqDnfy74hpR8XlJfEoWFF4Hzwy6eoUc6w/w331-h400/FV.png" alt="Francisco Veracoechea" style="width:100%;border-radius:4px;"/>
+        <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.5rem">
+          <a href="https://x.com/opinionFV" target="_blank" style="background:var(--ink);color:var(--white);padding:.4rem;font-size:.75rem;font-weight:600;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;display:block">X @opinionFV</a>
+          <a href="https://www.tiktok.com/@newsweek_latam" target="_blank" style="background:var(--ink);color:var(--white);padding:.4rem;font-size:.75rem;font-weight:600;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;display:block">TikTok @newsweek_latam</a>
+          <a href="mailto:endirectofv@gmail.com" style="background:var(--red);color:var(--white);padding:.4rem;font-size:.75rem;font-weight:600;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;display:block">endirectofv@gmail.com</a>
+          <a href="https://wa.me/50687192443" target="_blank" style="background:var(--red);color:var(--white);padding:.4rem;font-size:.75rem;font-weight:600;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;display:block">+506 8719-2443</a>
+        </div>
+      </div>
+      <div class="art-body">
+        <p>Soy periodista, nacido en Costa Rica y criado en Venezuela —las dos son mis patrias—. El ejercicio del periodismo me llevó con el tiempo hacia el marketing estratégico, y fue el amor genuino por la tecnología lo que abrió las puertas hacia la ciberseguridad y las redes comunitarias.</p>
+        <p>Me interesa la geopolítica, la política y los procesos que moldean nuestro tiempo. Eso es lo que se escribe aquí, en <strong>News LATAM</strong>: análisis riguroso, contexto que la noticia merece y una perspectiva propia construida en más de dos décadas de oficio.</p>
+        <h2>Servicios profesionales</h2>
+        <p>Además del periodismo analítico, ofrezco servicios freelance de cobertura de eventos, elaboración de notas de prensa, reportajes, publirreportajes y monitoreo de medios nacionales e internacionales (prensa escrita, radio y televisión).</p>
+        <p>Trabajo con base en Costa Rica y tengo disponibilidad para trasladarme a cualquier zona del país o al extranjero según el proyecto.</p>
+        <p>Si su empresa, organización o institución necesita cobertura profesional o seguimiento de medios, con gusto conversamos.</p>
+        <p><a href="index.html" style="color:var(--red);font-weight:700">Ver página de servicios completa →</a></p>
+        <h2>Apoyar este trabajo</h2>
+        <p>News LATAM es un proyecto de periodismo independiente. Si el contenido le aporta valor, puede apoyarlo:</p>
+        <p>
+          <a href="https://www.paypal.com/donate/?hosted_button_id=7TNKF5WCNFUX8" target="_blank" style="color:var(--red);font-weight:700">Donar por PayPal</a> &nbsp;·&nbsp;
+          <a href="https://www.binance.com/es-LA/my/payment/dashboard" target="_blank" style="color:var(--red);font-weight:700">Donar por Binance</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+/* ── FILTROS POR CATEGORÍA ── */
+function filtrarPor(cat) {
+  // Actualizar nav activo
+  ['nav-inicio','nav-conflicto','nav-iran','nav-oriente','nav-sobre'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  const navMap = {'conflicto':'nav-conflicto','iran':'nav-iran','medio oriente':'nav-oriente'};
+  if (navMap[cat]) document.getElementById(navMap[cat]).classList.add('active');
+
+  // Ocultar sobre mí
+  document.getElementById('sobremi-view').style.display = 'none';
+  document.getElementById('listing-view').style.display = 'block';
+  document.getElementById('article-view').style.display = 'none';
+
+  const filtrados = ARTICULOS.filter(a => a.categoria.toLowerCase().includes(cat));
+
+  const secTitle = cat.charAt(0).toUpperCase() + cat.slice(1);
+  document.getElementById('featured-slot').innerHTML = `<div class="section-rule"><span class="section-rule-label">Categoría: ${secTitle}</span><div class="section-rule-line"></div></div>`;
+
+  if (filtrados.length === 0) {
+    document.getElementById('grid-slot').innerHTML = '<p style="color:var(--gray);padding:2rem 0">No hay artículos en esta categoría todavía.</p>';
+    document.getElementById('lista-slot').innerHTML = '';
+    return;
+  }
+
+  document.getElementById('grid-slot').innerHTML = `<div class="three-col">${filtrados.map(a => `
+    <div class="col-art" onclick="abrirArticulo(${ARTICULOS.indexOf(a)})">
+      <p class="art-kicker">${a.categoria}</p>
+      ${img(a.imagen, a.titulo, 'col-img')}
+      <h3>${a.titulo}</h3>
+      <p>${a.resumen}</p>
+      <span class="art-date">${a.fecha}</span>
+    </div>`).join('')}</div>`;
+  document.getElementById('lista-slot').innerHTML = '';
+  window.scrollTo(0,0);
+}
+
+/* ── SOBRE MÍ ── */
+function mostrarSobreMi() {
+  document.getElementById('listing-view').style.display  = 'none';
+  document.getElementById('article-view').style.display  = 'none';
+  document.getElementById('sobremi-view').style.display  = 'block';
+  ['nav-inicio','nav-conflicto','nav-iran','nav-oriente'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  document.getElementById('nav-sobre').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ── CONTADOR DE VISITAS (localStorage) ── */
+function contarVisita() {
+  let total = parseInt(localStorage.getItem('nwl_visitas') || '0') + 1;
+  localStorage.setItem('nwl_visitas', total);
+  const el = document.getElementById('contador-visitas');
+  if (el) el.textContent = total.toLocaleString('es');
+}
+contarVisita();
+
+/* ── AJUSTE AL VOLVER AL INICIO ── */
+const _origMostrar = mostrarListado;
+window.mostrarListado = function() {
+  ['nav-conflicto','nav-iran','nav-oriente','nav-sobre'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  const ni = document.getElementById('nav-inicio');
+  if (ni) ni.classList.add('active');
+  document.getElementById('sobremi-view').style.display = 'none';
+  renderAll();
+  document.getElementById('listing-view').style.display = 'block';
+  document.getElementById('article-view').style.display = 'none';
+  window.scrollTo(0,0);
+  history.pushState({view:'listing'}, '', window.location.pathname);
+};
+
+</script>
 </body>
 </html>
