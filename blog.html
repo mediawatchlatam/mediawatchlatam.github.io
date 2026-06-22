@@ -461,19 +461,23 @@ function abrirArticulo(idx) {
   document.getElementById('listing-view').style.display  = 'none';
   document.getElementById('article-view').style.display  = 'block';
   window.scrollTo(0,0);
-  history.pushState({idx}, '', '#articulo-'+idx);
+  history.pushState({view:'article', idx}, '', '#articulo-'+idx);
 }
 
 function mostrarListado() {
   document.getElementById('listing-view').style.display  = 'block';
   document.getElementById('article-view').style.display  = 'none';
   window.scrollTo(0,0);
-  if (history.state && history.state.idx !== undefined) history.back();
+  history.pushState({view:'listing'}, '', window.location.pathname);
 }
 
 window.addEventListener('popstate', e => {
-  if (e.state && e.state.idx !== undefined) abrirArticulo(e.state.idx);
-  else mostrarListado();
+  if (e.state && e.state.view === 'article') abrirArticulo(e.state.idx);
+  else { 
+    document.getElementById('listing-view').style.display = 'block';
+    document.getElementById('article-view').style.display = 'none';
+    window.scrollTo(0,0);
+  }
 });
 
 function renderAll() {
