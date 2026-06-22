@@ -407,7 +407,7 @@ const SIDEBAR_HTML = `
   <div class='widget'>
     <span class='widget-title'>Estadísticas del blog</span>
     <div class='about-widget' style='text-align:center'>
-      <div style='font-size:2rem;font-weight:900;color:var(--red)' id='contador-visitas'>—</div>
+      <div style='font-size:2rem;font-weight:900;color:var(--red)' class='contador-visitas'>—</div>
       <div style='font-size:.75rem;color:var(--gray);margin-top:.3rem'>visitas desde este dispositivo</div>
     </div>
   </div>
@@ -554,6 +554,8 @@ function renderAll() {
   // Sidebars
   document.getElementById('sidebar-listing').innerHTML  = SIDEBAR_HTML;
   document.getElementById('sidebar-article').innerHTML  = SIDEBAR_HTML;
+  // Actualizar contador después de renderizar el sidebar
+  contarVisita();
 
   // Fecha
   document.getElementById('hoy-fecha').textContent =
@@ -658,10 +660,12 @@ function mostrarSobreMi() {
 function contarVisita() {
   let total = parseInt(localStorage.getItem('nwl_visitas') || '0') + 1;
   localStorage.setItem('nwl_visitas', total);
-  const el = document.getElementById('contador-visitas');
-  if (el) el.textContent = total.toLocaleString('es');
+  // Actualizar todos los elementos con la clase contador-visitas
+  document.querySelectorAll('.contador-visitas').forEach(el => {
+    el.textContent = total.toLocaleString('es');
+  });
+  return total;
 }
-contarVisita();
 
 /* ── AJUSTE AL VOLVER AL INICIO ── */
 const _origMostrar = mostrarListado;
